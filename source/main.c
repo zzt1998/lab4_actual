@@ -11,13 +11,72 @@
 #ifdef _SIMULATE_
 #include "simAVRHeader.h"
 #endif
-
+enum States{start, offrelease, offpress, onrelease, onpress  } state;
+unsigned char button0;
+void botton_tick(){
+        button0 = PINA & 0x01;
+        switch(state){
+                case start:
+                        state = offrelease;
+                        break;
+                case offrelease:
+                        if(botton == 0x01){
+                                state = onpress;
+                        }
+                        else{
+                                state = offrelease;
+                        }
+			break;
+		case onpress:
+			if(botton == 0x01;){
+				state = onpress;
+			}
+			else{
+				state = onrelease;
+			}
+			break;
+		case onrelease:
+			if(botton = 0x01){
+				state = offpress;
+			}
+			else{
+				state = onrelease;
+			}
+			break;
+		case offpress:
+			if(botton == 0x01){
+				state = offpress;
+			}
+			else{
+				state = offrelease;
+			}
+			break;
+	}
+	switch(state){
+		case start:
+			break;
+		case offrelease:
+			tempB = 0x01;
+			break;
+		case onpress:
+			tempb = 0x02;
+			break;
+		case onrelease:
+			tempb = 0x02;
+			break;
+		case offpress:
+			tempb = 0x01;
+			break;
+	}
+}
 int main(void) {
-    /* Insert DDR and PORT initializations */
-
-    /* Insert your solution below */
+	DDRA = 0x00; PORTA = 0xFF;
+	DDRB = 0xFF; PORTC = 0x00;
+	state = start;
+	tempb = 0x01;
     while (1) {
-
+	button_tick();
+	PORTC = tempc;
     }
     return 1;
 }
